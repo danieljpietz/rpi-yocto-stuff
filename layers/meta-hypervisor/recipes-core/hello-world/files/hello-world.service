@@ -1,0 +1,12 @@
+[Unit]
+Description=Hello World hypervisor greeting
+After=getty.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/hello-world.sh
+StandardOutput=journal+console
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

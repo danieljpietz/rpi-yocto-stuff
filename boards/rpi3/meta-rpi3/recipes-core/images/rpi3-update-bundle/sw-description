@@ -1,0 +1,41 @@
+software =
+{
+	version = "0.1.0";
+
+	stable = {
+		/* Running from partition 2, install into partition 3 */
+		copy2 = {
+			images: (
+				{
+					filename = "hello-hypervisor-image-raspberrypi3-64.rootfs.ext4.gz";
+					device = "/dev/mmcblk0p3";
+					type = "raw";
+					compressed = "zlib";
+					installed-directly = true;
+				}
+			);
+			bootenv: (
+				{ name = "rootpart"; value = "3"; },
+				{ name = "bootcount"; value = "0"; },
+				{ name = "upgrade_available"; value = "1"; }
+			);
+		};
+		/* Running from partition 3, install into partition 2 */
+		copy1 = {
+			images: (
+				{
+					filename = "hello-hypervisor-image-raspberrypi3-64.rootfs.ext4.gz";
+					device = "/dev/mmcblk0p2";
+					type = "raw";
+					compressed = "zlib";
+					installed-directly = true;
+				}
+			);
+			bootenv: (
+				{ name = "rootpart"; value = "2"; },
+				{ name = "bootcount"; value = "0"; },
+				{ name = "upgrade_available"; value = "1"; }
+			);
+		};
+	};
+}

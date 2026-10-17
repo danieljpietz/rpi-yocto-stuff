@@ -1,0 +1,13 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          ab-boot-confirm
+# Required-Start:    $local_fs
+# Default-Start:     2 3 4 5
+# Short-Description: Confirm successful boot for A/B rollback
+### END INIT INFO
+case "$1" in
+    start) /usr/sbin/ab-boot-confirm ;;
+    stop|restart|reload|force-reload) ;;
+    *) echo "Usage: $0 start" >&2; exit 1 ;;
+esac
+exit 0

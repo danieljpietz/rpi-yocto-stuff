@@ -1,0 +1,23 @@
+# A/B boot with rollback. SWUpdate flips rootpart and sets upgrade_available=1;
+# ab-boot-confirm clears upgrade_available/bootcount once userspace is up.
+if test -z "${rootpart}"; then setenv rootpart 2; fi
+if test -z "${bootcount}"; then setenv bootcount 0; fi
+if test -z "${bootlimit}"; then setenv bootlimit 3; fi
+
+if test "${upgrade_available}" = "1"; then
+    setexpr bootcount ${bootcount} + 1
+    if test ${bootcount} -gt ${bootlimit}; then
+        echo "Boot limit exceeded, rolling back"
+        if test "${rootpart}" = "2"; then setenv rootpart 3; else setenv rootpart 2; fi
+        setenv upgrade_available 0
+        setenv bootcount 0
+    fi
+    saveenv
+fi
+
+fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
+# The last root= on the kernel command line wins
+setenv bootargs "${bootargs} root=/dev/mmcblk0p${rootpart}"
+fatload @@BOOT_MEDIA@@ 0:1 ${kernel_addr_r} @@KERNEL_IMAGETYPE@@
+if test ! -e @@BOOT_MEDIA@@ 0:1 uboot.env; then saveenv; fi;
+@@KERNEL_BOOTCMD@@ ${kernel_addr_r} - ${fdt_addr}

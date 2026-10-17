@@ -1,0 +1,5 @@
+# Install into the inactive slot: running from p2 updates copy2 (p3), and vice versa.
+case "$(sed -n 's/.*root=\/dev\/mmcblk0p\([0-9]*\).*/\1/p' /proc/cmdline)" in
+    3) SWUPDATE_ARGS="${SWUPDATE_ARGS} -e stable,copy1" ;;
+    *) SWUPDATE_ARGS="${SWUPDATE_ARGS} -e stable,copy2" ;;
+esac

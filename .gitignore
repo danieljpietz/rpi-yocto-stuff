@@ -1,0 +1,9 @@
+# top-level layers/ holds hand-written layers (tracked in git)
+# boards/<board>/layers/ holds kas-cloned external layers (not tracked)
+/boards/*/layers/
+/boards/*/build/
+/downloads/
+/sstate-cache/
+
+*.pyc
+*.swp

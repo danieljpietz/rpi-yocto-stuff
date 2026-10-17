@@ -1,0 +1,69 @@
+header:
+  version: 14
+
+distro: djp-linux
+machine: raspberrypi3-64
+
+target: 
+  - hello-hypervisor-image
+  - rpi3-update-bundle
+
+repos:
+  # Core Yocto / OpenEmbedded
+  poky:
+    url: https://git.yoctoproject.org/poky
+    branch: scarthgap
+    commit: 4fb7016a07507683359ebd620f1951fd5ea44bfa
+    path: layers/poky
+    layers:
+      meta:
+      meta-poky:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    branch: scarthgap
+    commit: 0f00f8b9a21950640da8c5707343e5540133f86e
+    path: layers/meta-openembedded
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+      meta-filesystems:
+
+  # Raspberry Pi BSP (machine definitions, bootloader, firmware)
+  meta-raspberrypi:
+    url: https://git.yoctoproject.org/meta-raspberrypi
+    branch: scarthgap
+    commit: 018d44467c4f09eb63f8ea5e86e85d755250cf89
+    path: layers/meta-raspberrypi
+
+  # KVM/QEMU/libvirt hypervisor stack
+  meta-virtualization:
+    url: https://git.yoctoproject.org/meta-virtualization
+    branch: scarthgap
+    commit: c141b3cd60ad3a1bbab22b4884742d4c082beda6
+    path: layers/meta-virtualization
+
+  # OTA update agent
+  meta-swupdate:
+    url: https://github.com/sbabic/meta-swupdate.git
+    branch: scarthgap
+    commit: 7da41c5f2eb58c95cf5b312cf0b34fdfc7bb1e4e
+    path: layers/meta-swupdate
+
+  # Board-specific settings (UART, image format)
+  meta-rpi3:
+    path: meta-rpi3
+
+  # Board-agnostic hypervisor layer (hello-world, image, kernel feature fragments)
+  meta-hypervisor:
+    path: ../../layers/meta-hypervisor
+
+  # User customisations (OpenSSH server, preinstalled authorized key)
+  meta-user:
+    path: ../../layers/meta-user
+
+local_conf_header:
+  host-cache: |
+    DL_DIR = "/srv/yocto/downloads"
+    SSTATE_DIR = "/srv/yocto/sstate"

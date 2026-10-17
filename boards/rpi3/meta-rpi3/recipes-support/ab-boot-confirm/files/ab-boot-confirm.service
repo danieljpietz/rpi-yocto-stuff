@@ -1,0 +1,11 @@
+[Unit]
+Description=Confirm successful boot for A/B rollback
+RequiresMountsFor=/boot
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ab-boot-confirm
+
+[Install]
+WantedBy=multi-user.target

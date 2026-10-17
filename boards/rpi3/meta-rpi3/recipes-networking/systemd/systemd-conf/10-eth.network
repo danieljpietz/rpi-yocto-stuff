@@ -1,0 +1,6 @@
+[Match]
+# Pi 3B+ onboard ethernet is a USB LAN7515 (lan78xx); older 3B uses smsc95xx.
+Driver=lan78xx smsc95xx
+
+[Network]
+Address=192.168.109.1/24
