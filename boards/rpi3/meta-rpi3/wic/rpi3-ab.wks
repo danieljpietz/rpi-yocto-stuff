@@ -2,6 +2,6 @@
 # Partitions: 1 boot (firmware, U-Boot, kernel, uboot.env), 2/3 rootfs A/B, 4 data.
 
 part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --fixed-size 128
-part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label rootA --align 4096 --fixed-size 1024
-part --ondisk mmcblk0 --fstype=ext4 --label rootB --align 4096 --fixed-size 1024
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label rootA --align 4096 --fixed-size 8192
+part --ondisk mmcblk0 --fstype=ext4 --label rootB --align 4096 --fixed-size 8192
 part /data --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --size 256
